@@ -2,7 +2,7 @@ const state = {
   isLogin: false,
 };
 
-const Header = ({ isLogin }) => `
+const Header = ({ isLogin }) => /*html*/ `
   <header class="bg-blue-600 text-white p-4 sticky top-0">
     <h1 class="text-2xl font-bold">항해플러스</h1>
   </header>
@@ -14,7 +14,7 @@ const Header = ({ isLogin }) => `
       isLogin
         ? `
       <li><a href="/profile" class="text-gray-600">프로필</a></li>
-      <li><a href="#" class="text-gray-600">로그아웃</a></li>`
+      <li><a href="#" id="logout" class="text-gray-600">로그아웃</a></li>`
         : `
       <li><a href="/login" class="text-gray-600">로그인</a></li>
     `
@@ -24,13 +24,13 @@ const Header = ({ isLogin }) => `
 
 `;
 
-const Footer = () => `
+const Footer = () => /*html*/ `
   <footer class="bg-gray-200 p-4 text-center">
   <p>&copy; 2024 항해플러스. All rights reserved.</p>
   </footer>
 `;
 
-const MainPage = () => `
+const MainPage = () => /*html*/ `
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
     ${Header({ isLogin: state.isLogin })}
@@ -128,7 +128,7 @@ const MainPage = () => `
   </div>
 `;
 
-const ErrorPage = () => `
+const ErrorPage = () => /*html*/ `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full text-center" style="max-width: 480px">
       <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
@@ -144,18 +144,26 @@ const ErrorPage = () => `
   </main>
 `;
 
-const LoginPage = () => `
+const LoginPage = () => /*html*/ `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
-      <form>
+      <form id="formLogin">
         <div class="mb-4">
-          <input type="text" placeholder="이메일 또는 전화번호" class="w-full p-2 border rounded">
+          <input 
+          type="text" 
+          placeholder="이메일 또는 전화번호" 
+          class="w-full p-2 border rounded"
+          id="email">
         </div>
         <div class="mb-6">
-          <input type="password" placeholder="비밀번호" class="w-full p-2 border rounded">
+          <input 
+          type="password" 
+          placeholder="비밀번호" 
+          class="w-full p-2 border rounded"
+          id="password">
         </div>
-        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded font-bold">로그인</button>
+        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded font-bold" id="btnLog" >로그인</button>
       </form>
       <div class="mt-4 text-center">
         <a href="#" class="text-blue-600 text-sm">비밀번호를 잊으셨나요?</a>
@@ -168,103 +176,178 @@ const LoginPage = () => `
   </main>
 `;
 
-const ProfilePage = () => `
+const ProfilePage = () => /*html*/ `
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
-        <header class="bg-blue-600 text-white p-4 sticky top-0">
-          <h1 class="text-2xl font-bold">항해플러스</h1>
-        </header>
-
-        <nav class="bg-white shadow-md p-2 sticky top-14">
-          <ul class="flex justify-around">
-            <li><a href="/" class="text-gray-600">홈</a></li>
-            <li><a href="/profile" class="text-blue-600">프로필</a></li>
-            <li><a href="#" class="text-gray-600">로그아웃</a></li>
-          </ul>
-        </nav>
-
+       ${Header({ isLogin: state.isLogin })}
         <main class="p-4">
           <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
-            <form>
-              <div class="mb-4">
-                <label
-                  for="username"
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  >사용자 이름</label
-                >
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value="홍길동"
-                  class="w-full p-2 border rounded"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="email"
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  >이메일</label
-                >
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value="hong@example.com"
-                  class="w-full p-2 border rounded"
-                />
-              </div>
-              <div class="mb-6">
-                <label
-                  for="bio"
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  >자기소개</label
-                >
-                <textarea
-                  id="bio"
-                  name="bio"
-                  rows="4"
-                  class="w-full p-2 border rounded"
-                >
-안녕하세요, 항해플러스에서 열심히 공부하고 있는 홍길동입니다.</textarea
-                >
-              </div>
+            <form id="btnProfile">
+              ${showProfile()}
               <button
                 type="submit"
                 class="w-full bg-blue-600 text-white p-2 rounded font-bold"
+                
               >
                 프로필 업데이트
               </button>
             </form>
           </div>
         </main>
-
-        <footer class="bg-gray-200 p-4 text-center">
-          <p>&copy; 2024 항해플러스. All rights reserved.</p>
-        </footer>
+        ${Footer()}
+        
       </div>
     </div>
   </div>
 `;
 
+function showProfile() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  let { username = "", email = "", bio = "" } = user;
+
+  return `
+    <div class="mb-4">
+      <label
+        for="username"
+        class="block text-gray-700 text-sm font-bold mb-2"
+        >사용자 이름</label
+      >
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value="${username != null ? username : ""}"
+        class="w-full p-2 border rounded"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="email"
+        class="block text-gray-700 text-sm font-bold mb-2"
+        >이메일</label
+      >
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="${email != null ? email : ""}"
+        class="w-full p-2 border rounded"
+      />
+    </div>
+    <div class="mb-6">
+      <label
+        for="bio"
+        class="block text-gray-700 text-sm font-bold mb-2"
+        >자기소개</label
+      >
+      <textarea
+        id="bio"
+        name="bio"
+        rows="4"
+        class="w-full p-2 border rounded"
+      > ${bio != null ? bio : ""}
+      </textarea>
+    </div>
+  `;
+}
+
+function editProfile() {
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    let userData = {};
+
+    document.querySelectorAll(".w-full.p-2.border.rounded").forEach((el) => {
+      userData[el.id] = el.value;
+    });
+
+    localStorage.setItem("user", JSON.stringify(userData));
+    console.log("user: ", localStorage.getItem("user"));
+  });
+}
+
+function btnLogin() {
+  let userData = {};
+
+  document.querySelectorAll("input").forEach((el) => {
+    userData[el.id] = el.value;
+
+    console.log("이름: ", el);
+  });
+
+  localStorage.setItem("user", JSON.stringify(userData));
+  console.log("user: ", localStorage.getItem("user"));
+}
+
+function btnLogout() {
+  localStorage.removeItem("user");
+}
+
 const render = () => {
+  const user = localStorage.getItem("user");
+
+  if (user) {
+    state.isLogin = true;
+  }
+
   document.body.innerHTML = App();
+
+  document.body.removeEventListener("submit", handleSubmit);
+  document.body.removeEventListener("click", handleClick);
+
+  document.body.addEventListener("submit", handleSubmit);
+  document.body.addEventListener("click", handleClick);
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (e.target.id === "btnProfile") {
+    editProfile();
+  }
+
+  if (e.target.id === "formLogin") {
+    btnLogin();
+    render();
+  }
+};
+
+const handleClick = (e) => {
+  if (e.target.tagName === "A") {
+    e.preventDefault();
+
+    const path = e.target.href.replace(location.origin, "");
+
+    if (e.target.id === "logout") {
+      btnLogout();
+      history.pushState(null, "", "/");
+    } else {
+      history.pushState(null, "", path);
+    }
+
+    render();
+  }
 };
 
 const App = () => {
   if (location.pathname === "/login") {
     return LoginPage();
-  } else if (location.pathname === "/profile") {
-    return ProfilePage();
-  } else if (location.pathname === "/") {
-    return MainPage();
-  } else {
-    return ErrorPage();
   }
+
+  if (location.pathname === "/profile") {
+    return ProfilePage();
+  }
+
+  if (location.pathname === "/") {
+    return MainPage();
+  }
+
+  return ErrorPage();
 };
 
 render();
