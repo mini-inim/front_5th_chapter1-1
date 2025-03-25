@@ -148,13 +148,13 @@ const LoginPage = () => /*html*/ `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
-      <form id="formLogin">
+      <form id="login-form">
         <div class="mb-4">
           <input 
           type="text" 
-          placeholder="이메일 또는 전화번호" 
+          placeholder="사용자 이름" 
           class="w-full p-2 border rounded"
-          id="email">
+          id="username">
         </div>
         <div class="mb-6">
           <input 
@@ -186,7 +186,7 @@ const ProfilePage = () => /*html*/ `
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
-            <form id="btnProfile">
+            <form id="profile-form">
               ${showProfile()}
               <button
                 type="submit"
@@ -208,7 +208,7 @@ const ProfilePage = () => /*html*/ `
 function showProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  let { username = "", email = "", bio = "" } = user;
+  let { username = "", email = "", bio = "자기소개입니다." } = user;
 
   return `
     <div class="mb-4">
@@ -250,34 +250,28 @@ function showProfile() {
         name="bio"
         rows="4"
         class="w-full p-2 border rounded"
-      > ${bio != null ? bio : ""}
+      > ${bio}
       </textarea>
     </div>
   `;
 }
 
 function editProfile() {
-  document.querySelector("form").addEventListener("submit", function (e) {
-    e.preventDefault();
+  let userData = {};
 
-    let userData = {};
-
-    document.querySelectorAll(".w-full.p-2.border.rounded").forEach((el) => {
-      userData[el.id] = el.value;
-    });
-
-    localStorage.setItem("user", JSON.stringify(userData));
-    console.log("user: ", localStorage.getItem("user"));
+  document.querySelectorAll(".w-full.p-2.border.rounded").forEach((el) => {
+    userData[el.id] = el.value;
   });
+
+  localStorage.setItem("user", JSON.stringify(userData));
+  console.log("user: ", localStorage.getItem("user"));
 }
 
 function btnLogin() {
-  let userData = {};
+  let userData = { email: "", bio: "" };
 
-  document.querySelectorAll("input").forEach((el) => {
-    userData[el.id] = el.value;
-
-    console.log("이름: ", el);
+  document.querySelectorAll("#username").forEach((el) => {
+    userData = { [el.id]: el.value, ...userData };
   });
 
   localStorage.setItem("user", JSON.stringify(userData));
@@ -285,15 +279,11 @@ function btnLogin() {
 }
 
 function btnLogout() {
-  localStorage.removeItem("user");
+  localStorage.clear();
 }
 
 const render = () => {
-  const user = localStorage.getItem("user");
-
-  if (user) {
-    state.isLogin = true;
-  }
+  state.isLogin = !!localStorage.getItem("user"); // 로그인 상태 업데이트
 
   document.body.innerHTML = App();
 
@@ -307,12 +297,13 @@ const render = () => {
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  if (e.target.id === "btnProfile") {
+  if (e.target.id === "profile-form") {
     editProfile();
   }
 
-  if (e.target.id === "formLogin") {
+  if (e.target.id === "login-form") {
     btnLogin();
+    history.pushState(null, "", "/");
     render();
   }
 };
@@ -325,7 +316,7 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      history.pushState(null, "", "/");
+      history.pushState(null, "", "/login");
     } else {
       history.pushState(null, "", path);
     }
@@ -334,20 +325,23 @@ const handleClick = (e) => {
   }
 };
 
-const App = () => {
-  if (location.pathname === "/login") {
-    return LoginPage();
-  }
-
-  if (location.pathname === "/profile") {
+const routes = {
+  "/": () => MainPage(),
+  "/login": () => LoginPage(),
+  "/profile": () => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (!user.username) {
+      history.pushState(null, "", "/login");
+      return LoginPage();
+    }
     return ProfilePage();
-  }
-
-  if (location.pathname === "/") {
-    return MainPage();
-  }
-
-  return ErrorPage();
+  },
 };
 
-render();
+const App = () => {
+  const path = window.location.pathname;
+  const PageComponent = routes[path] || (() => ErrorPage());
+  return PageComponent();
+};
+
+window.addEventListener("popstate", render());
