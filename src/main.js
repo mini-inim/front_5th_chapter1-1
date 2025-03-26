@@ -8,17 +8,17 @@ const Header = ({ isLogin }) => /*html*/ `
   </header>
 
   <nav class="bg-white shadow-md p-2 sticky top-14">
-  <ul class="flex justify-around">
-    <li><a href="/" class="text-blue-600">홈</a></li>
-    ${
-      isLogin
-        ? `
-      <li><a href="/profile" class="text-gray-600">프로필</a></li>
-      <li><a href="#" id="logout" class="text-gray-600">로그아웃</a></li>`
-        : `
-      <li><a href="/login" class="text-gray-600">로그인</a></li>
-    `
-    }
+    <ul class="flex justify-around">
+      <li><a href="/" class="text-blue-600 font-bold">홈</a></li>
+      ${
+        isLogin
+          ? `
+        <li><a href="/profile" class="text-gray-600">프로필</a></li>
+        <li><a href="#" id="logout" class="text-gray-600">로그아웃</a></li>`
+          : `
+        <li><a href="/login" class="text-gray-600">로그인</a></li>
+      `
+      }
     </ul>
   </nav>
 
@@ -208,7 +208,7 @@ const ProfilePage = () => /*html*/ `
 function showProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  let { username = "", email = "", bio = "자기소개입니다." } = user;
+  let { username = "", email = "", bio = "" } = user;
 
   return `
     <div class="mb-4">
@@ -282,10 +282,12 @@ function btnLogout() {
   localStorage.clear();
 }
 
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+
 const render = () => {
   state.isLogin = !!localStorage.getItem("user"); // 로그인 상태 업데이트
 
-  document.body.innerHTML = App();
+  document.querySelector("#root").innerHTML = App();
 
   document.body.removeEventListener("submit", handleSubmit);
   document.body.removeEventListener("click", handleClick);
@@ -317,6 +319,7 @@ const handleClick = (e) => {
     if (e.target.id === "logout") {
       btnLogout();
       history.pushState(null, "", "/login");
+      render();
     } else {
       history.pushState(null, "", path);
     }
@@ -327,9 +330,15 @@ const handleClick = (e) => {
 
 const routes = {
   "/": () => MainPage(),
-  "/login": () => LoginPage(),
+  "/login": () => {
+    if (user.username) {
+      history.pushState(null, "", "/");
+      return MainPage();
+    }
+
+    return LoginPage();
+  },
   "/profile": () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.username) {
       history.pushState(null, "", "/login");
       return LoginPage();
@@ -344,4 +353,5 @@ const App = () => {
   return PageComponent();
 };
 
-window.addEventListener("popstate", render());
+render();
+window.addEventListener("popstate", render);
