@@ -37,10 +37,10 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      window.location.hash = `${BASE}#/`;
+      window.location.hash = `${BASE}#/login`;
       render();
     } else {
-      window.location.hash = `${BASE}#/${path}`;
+      window.location.hash = `${BASE}#${path}`;
     }
 
     render();
