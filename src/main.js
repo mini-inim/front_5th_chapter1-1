@@ -4,6 +4,9 @@ import { ErrorPage } from "./page/error";
 import { LoginPage, btnLogin, btnLogout } from "./page/login";
 import { MainPage } from "./page/mainPage";
 
+const isProduction = import.meta.env.MODE === "production";
+const BASE = isProduction ? "/front_5th_chapter1-1" : "";
+
 const render = () => {
   state.isLogin = !!localStorage.getItem("user");
 
@@ -25,7 +28,7 @@ const handleSubmit = (e) => {
 
   if (e.target.id === "login-form") {
     btnLogin();
-    history.pushState(null, "", "/");
+    history.pushState(null, "", `${BASE}/`);
     render();
   }
 };
@@ -38,10 +41,10 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      history.pushState(null, "", "/login");
+      history.pushState(null, "", `${BASE}/login`);
       render();
     } else {
-      history.pushState(null, "", path);
+      history.pushState(null, "", BASE + path);
     }
 
     render();
@@ -49,20 +52,20 @@ const handleClick = (e) => {
 };
 
 const routes = {
-  "/": () => MainPage(),
-  "/login": () => {
+  [`${BASE}/`]: () => MainPage(),
+  [`${BASE}/login`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (user.username) {
-      history.pushState(null, "", "/");
+      history.pushState(null, "", `${BASE}/`);
       return MainPage();
     }
 
     return LoginPage();
   },
-  "/profile": () => {
+  [`${BASE}/profile`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.username) {
-      history.pushState(null, "", "/login");
+      history.pushState(null, "", `${BASE}/login`);
       return LoginPage();
     }
     return ProfilePage();
@@ -70,7 +73,7 @@ const routes = {
 };
 
 const App = () => {
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(BASE, "");
   const PageComponent = routes[path] || (() => ErrorPage());
   return PageComponent();
 };
