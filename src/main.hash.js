@@ -37,7 +37,7 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      window.location.hash = `${BASE}#/login`;
+      window.location.hash = `#/login`;
       render();
     } else {
       window.location.hash = `${BASE}#${path}`;
@@ -49,6 +49,7 @@ const handleClick = (e) => {
 
 const render = () => {
   const path = window.location.hash.slice(1) || "/";
+
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   console.log("path: ", path);
