@@ -1,4 +1,4 @@
-(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))a(s);new MutationObserver(s=>{for(const l of s)if(l.type==="childList")for(const i of l.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&a(i)}).observe(document,{childList:!0,subtree:!0});function r(s){const l={};return s.integrity&&(l.integrity=s.integrity),s.referrerPolicy&&(l.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?l.credentials="include":s.crossOrigin==="anonymous"?l.credentials="omit":l.credentials="same-origin",l}function a(s){if(s.ep)return;s.ep=!0;const l=r(s);fetch(s.href,l)}})();const b={isLogin:!1},m=()=>`
+(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))a(t);new MutationObserver(t=>{for(const s of t)if(s.type==="childList")for(const r of s.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&a(r)}).observe(document,{childList:!0,subtree:!0});function o(t){const s={};return t.integrity&&(s.integrity=t.integrity),t.referrerPolicy&&(s.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?s.credentials="include":t.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function a(t){if(t.ep)return;t.ep=!0;const s=o(t);fetch(t.href,s)}})();const n={isLogin:!1},i=()=>`
   <header class="bg-blue-600 text-white p-4 sticky top-0">
     <h1 class="text-2xl font-bold">항해플러스</h1>
   </header>
@@ -6,7 +6,7 @@
   <nav class="bg-white shadow-md p-2 sticky top-14">
     <ul class="flex justify-around">
       <li><a href="/" class="text-blue-600 font-bold">홈</a></li>
-      ${b.isLogin?`
+      ${n.isLogin?`
         <li><a href="/profile" class="text-gray-600">프로필</a></li>
         <li><a href="#" id="logout" class="text-gray-600">로그아웃</a></li>`:`
         <li><a href="/login" class="text-gray-600">로그인</a></li>
@@ -14,22 +14,22 @@
     </ul>
   </nav>
 
-`,p=()=>`
+`,d=()=>`
   <footer class="bg-gray-200 p-4 text-center">
   <p>&copy; 2024 항해플러스. All rights reserved.</p>
   </footer>
-`,f=()=>`
+`,u=()=>`
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
-       ${m()}
+       ${i()}
         <main class="p-4">
           <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
             <form id="profile-form">
-              ${g()}
+              ${c()}
               <button
                 type="submit"
                 class="w-full bg-blue-600 text-white p-2 rounded font-bold"
@@ -40,12 +40,12 @@
             </form>
           </div>
         </main>
-        ${p()}
+        ${d()}
         
       </div>
     </div>
   </div>
-`;function g(){const t=JSON.parse(localStorage.getItem("user"));let{username:e="",email:r="",bio:a=""}=t;return`
+`;function c(){const l=JSON.parse(localStorage.getItem("user"));let{username:e="",email:o="",bio:a=""}=l;return`
       <div class="mb-4">
         <label
           for="username"
@@ -70,7 +70,7 @@
           type="email"
           id="email"
           name="email"
-          value="${r??""}"
+          value="${o??""}"
           class="w-full p-2 border rounded"
         />
       </div>
@@ -88,7 +88,7 @@
         > ${a}
         </textarea>
       </div>
-    `}function v(){let t={};return document.querySelectorAll(".w-full.p-2.border.rounded").forEach(e=>{t[e.id]=e.value}),localStorage.setItem("user",JSON.stringify(t))}const h=()=>`
+    `}function b(){let l={};return document.querySelectorAll(".w-full.p-2.border.rounded").forEach(e=>{l[e.id]=e.value}),localStorage.setItem("user",JSON.stringify(l))}const m=()=>`
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full text-center" style="max-width: 480px">
       <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
@@ -102,7 +102,7 @@
       </a>
     </div>
   </main>
-`,n=()=>`
+`,f=()=>`
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
@@ -132,10 +132,10 @@
       </div>
     </div>
   </main>
-`;function x(){let t={email:"",bio:""};document.querySelectorAll("#username").forEach(e=>{t={[e.id]:e.value,...t}}),localStorage.setItem("user",JSON.stringify(t)),console.log("user: ",localStorage.getItem("user"))}function y(){localStorage.clear()}const d=()=>`
+`;function p(){let l={email:"",bio:""};document.querySelectorAll("#username").forEach(e=>{l={[e.id]:e.value,...l}}),localStorage.setItem("user",JSON.stringify(l)),console.log("user: ",localStorage.getItem("user"))}function g(){localStorage.clear()}const x=()=>`
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
-    ${m()}
+    ${i()}
       <main class="p-4">
         <div class="mb-4 bg-white rounded-lg shadow p-4">
           <textarea class="w-full p-2 border rounded" placeholder="무슨 생각을 하고 계신가요?"></textarea>
@@ -225,7 +225,7 @@
           </div>
         </div>
       </main>
-      ${p()}
+      ${d()}
     </div>
   </div>
-`,o=()=>{b.isLogin=!!localStorage.getItem("user"),document.querySelector("#root").innerHTML=S(),document.body.removeEventListener("submit",c),document.body.removeEventListener("click",u),document.body.addEventListener("submit",c),document.body.addEventListener("click",u)},c=t=>{t.preventDefault(),t.target.id==="profile-form"&&v(),t.target.id==="login-form"&&(x(),history.pushState(null,"","/"),o())},u=t=>{if(t.target.tagName==="A"){t.preventDefault();const e=t.target.href.replace(location.origin,"");t.target.id==="logout"?(y(),history.pushState(null,"","/login"),o()):history.pushState(null,"",e),o()}},w={"/":()=>d(),"/login":()=>JSON.parse(localStorage.getItem("user")||"{}").username?(history.pushState(null,"","/"),d()):n(),"/profile":()=>JSON.parse(localStorage.getItem("user")||"{}").username?f():(history.pushState(null,"","/login"),n())},S=()=>{const t=window.location.pathname;return(w[t]||(()=>h()))()};o();window.addEventListener("popstate",o);
+`;export{m as E,f as L,x as M,u as P,g as a,p as b,b as e,n as s};
