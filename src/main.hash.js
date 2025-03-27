@@ -51,6 +51,8 @@ const render = () => {
   const path = window.location.hash.slice(1) || "/";
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
+  console.log("path: ", path);
+
   let component;
 
   state.isLogin = !!localStorage.getItem("user");
