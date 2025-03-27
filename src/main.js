@@ -41,10 +41,10 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      history.pushState(null, "", `${BASE}/login`);
+      history.pushState(null, "", `/login`);
       render();
     } else {
-      history.pushState(null, "", `${BASE}/${path}`);
+      history.pushState(null, "", path);
     }
 
     render();
@@ -56,7 +56,7 @@ const routes = {
   [`${BASE}/login`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (user.username) {
-      history.pushState(null, "", `${BASE}/`);
+      history.pushState(null, "", `/`);
       return MainPage();
     }
 
@@ -65,7 +65,7 @@ const routes = {
   [`${BASE}/profile`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.username) {
-      history.pushState(null, "", `${BASE}/login`);
+      history.pushState(null, "", `/login`);
       return LoginPage();
     }
     return ProfilePage();
