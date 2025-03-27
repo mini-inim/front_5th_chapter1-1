@@ -5,8 +5,8 @@ import { LoginPage, btnLogin, btnLogout } from "./page/login";
 import { MainPage } from "./page/mainPage";
 
 const container = document.querySelector("#root");
-const isProduction = import.meta.env.MODE === "production";
-const BASE = isProduction ? "/front_5th_chapter1-1" : "";
+//const isProduction = import.meta.env.MODE === "production";
+//const BASE = isProduction ? "/front_5th_chapter1-1" : "";
 
 const pages = {
   [`/`]: () => MainPage(),
@@ -24,7 +24,7 @@ const handleSubmit = (e) => {
 
   if (e.target.id === "login-form") {
     btnLogin();
-    window.location.hash = `${BASE}#/`;
+    window.location.hash = `#/`;
     render();
   }
 };
@@ -40,7 +40,7 @@ const handleClick = (e) => {
       window.location.hash = `#/login`;
       render();
     } else {
-      window.location.hash = `${BASE}#${path}`;
+      window.location.hash = `#${path}`;
     }
 
     render();
