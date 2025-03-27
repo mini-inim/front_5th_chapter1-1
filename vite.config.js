@@ -18,5 +18,5 @@ export default defineConfig({
       },
     },
   },
-  base: isProduction ? "/front_5th_chapter1-1/" : "/",
+  base: isProduction ? "/front_5th_chapter1-1" : "/",
 });
