@@ -9,9 +9,9 @@ const isProduction = import.meta.env.MODE === "production";
 const BASE = isProduction ? "/front_5th_chapter1-1" : "";
 
 const pages = {
-  [`${BASE}/`]: () => MainPage(),
-  [`${BASE}/login`]: () => LoginPage(),
-  [`${BASE}/profile`]: () => ProfilePage(),
+  [`/`]: () => MainPage(),
+  [`/login`]: () => LoginPage(),
+  [`/profile`]: () => ProfilePage(),
   "*": () => ErrorPage(),
 };
 
