@@ -24,7 +24,7 @@ const handleSubmit = (e) => {
 
   if (e.target.id === "login-form") {
     btnLogin();
-    window.location.hash = "${BASE}#/";
+    window.location.hash = `${BASE}#/`;
     render();
   }
 };
@@ -37,10 +37,10 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      window.location.hash = "${BASE}#/";
+      window.location.hash = `${BASE}#/`;
       render();
     } else {
-      window.location.hash = "${BASE}#" + path;
+      window.location.hash = `${BASE}#/${path}`;
     }
 
     render();

@@ -1,25 +1,22 @@
 import { defineConfig } from "vitest/config";
+import { resolve } from "path";
 
-export default defineConfig(({ mode }) => {
-  const isProduction = mode === "production";
-  return {
-    test: {
-      globals: true,
-      environment: "jsdom",
-      setupFiles: "./src/setupTests.js",
-      exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
-    },
+const isProduction = process.env.NODE_ENV === "production";
 
-    base: isProduction ? "/front_5th_chapter1-1/" : "/",
-
-    build: {
-      outDir: "dist",
-      rollupOptions: {
-        input: {
-          main: "index.html",
-          hash: "index.hash.html",
-        },
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.js",
+    exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+        hash: resolve(__dirname, "index.hash.html"),
       },
     },
-  };
+  },
+  base: isProduction ? "/front_5th_chapter1-1/" : "/",
 });

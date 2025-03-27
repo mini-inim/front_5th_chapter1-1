@@ -44,7 +44,7 @@ const handleClick = (e) => {
       history.pushState(null, "", `${BASE}/login`);
       render();
     } else {
-      history.pushState(null, "", BASE + path);
+      history.pushState(null, "", `${BASE}/${path}`);
     }
 
     render();
@@ -73,7 +73,7 @@ const routes = {
 };
 
 const App = () => {
-  const path = window.location.pathname.replace(BASE, "");
+  const path = window.location.pathname;
   const PageComponent = routes[path] || (() => ErrorPage());
   return PageComponent();
 };
