@@ -37,7 +37,8 @@ const handleClick = (e) => {
   if (e.target.tagName === "A") {
     e.preventDefault();
 
-    const path = e.target.href.replace(location.origin, "");
+    const basePath = location.pathname.replace(/\/[^/]*$/, "");
+    const path = basePath + e.target.pathname;
 
     if (e.target.id === "logout") {
       btnLogout();
