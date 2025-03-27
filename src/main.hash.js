@@ -5,13 +5,13 @@ import { LoginPage, btnLogin, btnLogout } from "./page/login";
 import { MainPage } from "./page/mainPage";
 
 const container = document.querySelector("#root");
-const isProduction = import.meta.env.MODE === "production";
-const BASE = isProduction ? "/front_5th_chapter1-1" : "";
+// const isProduction = import.meta.env.MODE === "production";
+// const BASE = isProduction ? "/front_5th_chapter1-1" : "";
 
 const pages = {
-  [`${BASE}/`]: () => MainPage(),
-  [`${BASE}/login`]: () => LoginPage(),
-  [`${BASE}/profile`]: () => ProfilePage(),
+  [`/`]: () => MainPage(),
+  [`/login`]: () => LoginPage(),
+  [`/profile`]: () => ProfilePage(),
   "*": () => ErrorPage(),
 };
 
@@ -24,7 +24,7 @@ const handleSubmit = (e) => {
 
   if (e.target.id === "login-form") {
     btnLogin();
-    window.location.hash = `${BASE}#/`;
+    window.location.hash = `#/`;
     render();
   }
 };
@@ -37,10 +37,10 @@ const handleClick = (e) => {
 
     if (e.target.id === "logout") {
       btnLogout();
-      window.location.hash = `${BASE}#/`;
+      window.location.hash = `#/`;
       render();
     } else {
-      window.location.hash = `${BASE}#/${path}`;
+      window.location.hash = `#/${path}`;
     }
 
     render();

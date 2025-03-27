@@ -4,8 +4,8 @@ import { ErrorPage } from "./page/error";
 import { LoginPage, btnLogin, btnLogout } from "./page/login";
 import { MainPage } from "./page/mainPage";
 
-const isProduction = import.meta.env.MODE === "production";
-const BASE = isProduction ? "/front_5th_chapter1-1" : "";
+// const isProduction = import.meta.env.MODE === "production";
+// const BASE = isProduction ? "/front_5th_chapter1-1" : "";
 
 const render = () => {
   state.isLogin = !!localStorage.getItem("user");
@@ -28,7 +28,7 @@ const handleSubmit = (e) => {
 
   if (e.target.id === "login-form") {
     btnLogin();
-    history.pushState(null, "", `${BASE}/`);
+    history.pushState(null, "", `/`);
     render();
   }
 };
@@ -52,8 +52,8 @@ const handleClick = (e) => {
 };
 
 const routes = {
-  [`${BASE}/`]: () => MainPage(),
-  [`${BASE}/login`]: () => {
+  [`/`]: () => MainPage(),
+  [`/login`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (user.username) {
       history.pushState(null, "", `/`);
@@ -62,7 +62,7 @@ const routes = {
 
     return LoginPage();
   },
-  [`${BASE}/profile`]: () => {
+  [`/profile`]: () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.username) {
       history.pushState(null, "", `/login`);
